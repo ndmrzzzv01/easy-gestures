@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
-            EasyGesturesTheme {
+            EasyGesturesTheme(false) {
                 EasyGesturesApp()
             }
         }
