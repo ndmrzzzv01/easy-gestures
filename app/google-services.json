@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "630031890694",
+    "project_id": "easygestures-2bd15",
+    "storage_bucket": "easygestures-2bd15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630031890694:android:7323c79fe5335f7d52c687",
+        "android_client_info": {
+          "package_name": "com.ndmrzzzv.easygestures"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630031890694-4al1d10g5gdm1f6mbklgtirhf9jpsqak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ndmrzzzv.easygestures",
+            "certificate_hash": "bf950c8a5756e266b75ccdbc98c5251f9de4c8a6"
+          }
+        },
+        {
+          "client_id": "630031890694-3lts6d3i0o7otere152ls5cavr34g0ir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSbD89LE78s0fN18oIg322x_eyPn8it3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630031890694-3lts6d3i0o7otere152ls5cavr34g0ir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
