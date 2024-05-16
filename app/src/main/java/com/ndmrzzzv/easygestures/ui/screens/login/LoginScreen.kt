@@ -41,7 +41,7 @@ fun LoginScreen(
         }
 
         when (authState) {
-            is AuthState.Success -> Text("Login Successful")
+            is AuthState.Success -> { actions.goToHomePage() }
             is AuthState.Error -> Text("Error: ${authState.message}")
             AuthState.None -> {}
         }

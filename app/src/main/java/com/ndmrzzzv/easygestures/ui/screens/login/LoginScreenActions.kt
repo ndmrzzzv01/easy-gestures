@@ -21,7 +21,9 @@ data class LoginScreenActions(
                 loginWithGoogle = {
                     viewModel.handleGoogleSignInResult(it)
                 },
-                goToHomePage = {}
+                goToHomePage = {
+                    navController.navigate("home_screen")
+                }
             )
         }
     }
