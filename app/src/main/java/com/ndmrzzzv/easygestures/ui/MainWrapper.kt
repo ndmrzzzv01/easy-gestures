@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ndmrzzzv.easygestures.ui.screens.Screens
 import com.ndmrzzzv.easygestures.ui.screens.home.HomeScreen
+import com.ndmrzzzv.easygestures.ui.screens.home.HomeScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginScreen
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
@@ -30,7 +31,8 @@ fun EasyGesturesApp() {
             LoginScreen(actions, authState, client)
         }
         composable(Screens.HomeScreen.route) {
-            HomeScreen()
+            val actions = HomeScreenActions.create(navController)
+            HomeScreen(actions)
         }
     }
 }
