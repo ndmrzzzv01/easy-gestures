@@ -1,7 +1,6 @@
-package com.ndmrzzzv.easygestures.ui.screens.splash
+package com.ndmrzzzv.easygestures.ui.screens.search
 
 import androidx.navigation.NavHostController
-import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
 
 data class SearchScreenActions(
     val goToCourseDetailPage: () -> Unit,

@@ -20,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.ndmrzzzv.easygestures.R
-import com.ndmrzzzv.easygestures.ui.screens.splash.SearchScreenActions
 
 @Composable
 fun SearchScreen(

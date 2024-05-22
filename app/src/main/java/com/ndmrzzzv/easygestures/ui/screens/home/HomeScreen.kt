@@ -47,10 +47,12 @@ fun HomeScreen(actions: HomeScreenActions) {
             contentDescription = "",
             contentScale = ContentScale.FillBounds
         )
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .padding(top = 24.dp)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(top = 24.dp)
+        ) {
             items(HomeList.get()) {
                 ItemPage(pageItem = it, actions)
             }
@@ -68,14 +70,16 @@ fun ItemPage(pageItem: HomeData, actions: HomeScreenActions) {
             .clickable {
                 when (pageItem.type) {
                     HomeTypeScreen.MY_ACCOUNT -> {
-
+                        actions.goToMyAccountPage()
                     }
 
                     HomeTypeScreen.SEARCH -> {
-
+                        actions.goToSearchPage()
                     }
 
-                    HomeTypeScreen.FAVOURITE -> {}
+                    HomeTypeScreen.FAVOURITE -> {
+                        actions.goToFavouritePage()
+                    }
 
                 }
             },

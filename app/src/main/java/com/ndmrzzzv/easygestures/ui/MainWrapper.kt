@@ -11,9 +11,12 @@ import com.ndmrzzzv.easygestures.ui.screens.home.HomeScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginScreen
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
+import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountActions
+import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountScreen
+import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreen
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
-import com.ndmrzzzv.easygestures.ui.screens.splash.SearchScreenActions
+import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreen
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreenActions
 import org.koin.androidx.compose.koinViewModel
@@ -21,7 +24,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun EasyGesturesApp() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screens.SearchScreen.route) {
+    NavHost(navController = navController, startDestination = Screens.SplashScreen.route) {
         composable(Screens.SplashScreen.route) {
             val actions = SplashScreenActions.create(navController)
             SplashScreen(actions)
@@ -41,6 +44,11 @@ fun EasyGesturesApp() {
             val viewModel = koinViewModel<SearchViewModel>()
             val actions = SearchScreenActions.create(navController, viewModel)
             SearchScreen(actions)
+        }
+        composable(Screens.MyAccountScreen.route) {
+            val viewModel = koinViewModel<MyAccountViewModel>()
+            val actions = MyAccountActions.create(viewModel)
+            MyAccountScreen(actions)
         }
     }
 }
