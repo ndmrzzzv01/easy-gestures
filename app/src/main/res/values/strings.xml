@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">EasyGestures</string>
     <string name="default_web_client_id">630031890694-4al1d10g5gdm1f6mbklgtirhf9jpsqak.apps.googleusercontent.com</string>
+    <string name="welcome_my_account">Hi there!\nWe are glad to see you in our application.\nOn this page you can change your personal data! </string>
+    <string name="no_progress_text">Still no progress on your courses? Find the right one!</string>
 </resources>

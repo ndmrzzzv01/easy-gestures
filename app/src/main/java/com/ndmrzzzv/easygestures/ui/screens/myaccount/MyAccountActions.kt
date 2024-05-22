@@ -1,7 +1,10 @@
 package com.ndmrzzzv.easygestures.ui.screens.myaccount
 
 data class MyAccountActions(
-    val updatePhoto: () -> Unit,
+    val updateInfoAboutUser: () -> Unit,
+    val changePhoto: () -> Unit,
+    val findACourse: () -> Unit,
+    val goToFavourite: () -> Unit,
 ) {
 
     companion object {
@@ -9,7 +12,10 @@ data class MyAccountActions(
             viewModel: MyAccountViewModel
         ): MyAccountActions {
             return MyAccountActions(
-                updatePhoto = {},
+                updateInfoAboutUser = {},
+                changePhoto = {},
+                findACourse = {},
+                goToFavourite = {}
             )
         }
     }

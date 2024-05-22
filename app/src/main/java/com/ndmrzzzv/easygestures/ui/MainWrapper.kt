@@ -48,7 +48,7 @@ fun EasyGesturesApp() {
         composable(Screens.MyAccountScreen.route) {
             val viewModel = koinViewModel<MyAccountViewModel>()
             val actions = MyAccountActions.create(viewModel)
-            MyAccountScreen(actions)
+            MyAccountScreen(actions, viewModel.currentUser)
         }
     }
 }
