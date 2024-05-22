@@ -1,6 +1,7 @@
 package com.ndmrzzzv.easygestures.ui.screens.home
 
 import androidx.navigation.NavHostController
+import com.ndmrzzzv.easygestures.ui.screens.Screens
 
 data class HomeScreenActions(
     val goToMyAccountPage:() -> Unit,
@@ -20,7 +21,7 @@ data class HomeScreenActions(
 
                 },
                 goToSearchPage = {
-
+                    navController.navigate(Screens.SearchScreen.route)
                 }
             )
         }

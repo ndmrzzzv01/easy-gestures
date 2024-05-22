@@ -2,6 +2,7 @@ package com.ndmrzzzv.easygestures.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.data.HomeData
 import com.ndmrzzzv.easygestures.data.HomeList
+import com.ndmrzzzv.easygestures.data.HomeTypeScreen
 
 @Composable
 fun HomeScreen(actions: HomeScreenActions) {
@@ -45,21 +47,38 @@ fun HomeScreen(actions: HomeScreenActions) {
             contentDescription = "",
             contentScale = ContentScale.FillBounds
         )
-        LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f).padding(top = 24.dp)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f)
+            .padding(top = 24.dp)) {
             items(HomeList.get()) {
-                ItemPage(pageItem = it)
+                ItemPage(pageItem = it, actions)
             }
         }
     }
 }
 
 @Composable
-fun ItemPage(pageItem: HomeData) {
+fun ItemPage(pageItem: HomeData, actions: HomeScreenActions) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
-            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
+            .clickable {
+                when (pageItem.type) {
+                    HomeTypeScreen.MY_ACCOUNT -> {
+
+                    }
+
+                    HomeTypeScreen.SEARCH -> {
+
+                    }
+
+                    HomeTypeScreen.FAVOURITE -> {}
+
+                }
+            },
         border = BorderStroke(1.dp, Color.Magenta),
         elevation = CardDefaults.cardElevation(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)

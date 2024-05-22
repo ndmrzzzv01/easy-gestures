@@ -1,6 +1,7 @@
 package com.ndmrzzzv.easygestures.ui.screens.splash
 
 import androidx.navigation.NavHostController
+import com.ndmrzzzv.easygestures.ui.screens.Screens
 
 data class SplashScreenActions(
     val navigateToLoginScreen: () -> Unit,
@@ -13,10 +14,10 @@ data class SplashScreenActions(
         ): SplashScreenActions {
             return SplashScreenActions(
                 navigateToLoginScreen = {
-                    navController.navigate("login_screen")
+                    navController.navigate(Screens.LoginScreen.route)
                 },
                 navigateToHomeScreen = {
-                    navController.navigate("home_screen")
+                    navController.navigate(Screens.HomeScreen.route)
                 }
             )
         }

@@ -2,6 +2,7 @@ package com.ndmrzzzv.easygestures.ui.screens.login
 
 import androidx.navigation.NavHostController
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.ndmrzzzv.easygestures.ui.screens.Screens
 
 data class LoginScreenActions(
     val loginWithEmail: (email: String, password: String) -> Unit,
@@ -22,7 +23,7 @@ data class LoginScreenActions(
                     viewModel.handleGoogleSignInResult(it)
                 },
                 goToHomePage = {
-                    navController.navigate("home_screen")
+                    navController.navigate(Screens.HomeScreen.route)
                 }
             )
         }
