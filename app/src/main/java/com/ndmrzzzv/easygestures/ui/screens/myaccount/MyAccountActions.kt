@@ -1,5 +1,8 @@
 package com.ndmrzzzv.easygestures.ui.screens.myaccount
 
+import androidx.navigation.NavHostController
+import com.ndmrzzzv.easygestures.ui.screens.Screens
+
 data class MyAccountActions(
     val updateInfoAboutUser: () -> Unit,
     val changePhoto: () -> Unit,
@@ -9,13 +12,18 @@ data class MyAccountActions(
 
     companion object {
         fun create(
-            viewModel: MyAccountViewModel
+            viewModel: MyAccountViewModel,
+            navController: NavHostController
         ): MyAccountActions {
             return MyAccountActions(
                 updateInfoAboutUser = {},
                 changePhoto = {},
-                findACourse = {},
-                goToFavourite = {}
+                findACourse = {
+                    navController.navigate(Screens.SearchScreen.route)
+                },
+                goToFavourite = {
+                    navController.navigate(Screens.FavouriteScreen.route)
+                }
             )
         }
     }
