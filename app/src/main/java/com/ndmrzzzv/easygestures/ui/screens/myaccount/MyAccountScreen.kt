@@ -1,5 +1,6 @@
 package com.ndmrzzzv.easygestures.ui.screens.myaccount
 
+import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -45,11 +46,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.google.firebase.auth.FirebaseUser
 import com.ndmrzzzv.easygestures.R
+import com.ndmrzzzv.easygestures.getImageForMyAccountLauncher
 
 @Composable
 fun MyAccountScreen(
     actions: MyAccountActions,
-    currentUser: FirebaseUser?
+    currentUser: FirebaseUser?,
+    userPhoto: Uri?
 ) {
 
     Image(
@@ -86,14 +89,15 @@ fun MyAccountScreen(
             color = Color(0xFFB284AB)
         )
 
+        val launcher = getImageForMyAccountLauncher(actions.changePhoto)
         AsyncImage(
             modifier = Modifier
                 .padding(top = 16.dp)
-                .size(70.dp)
+                .size(80.dp)
                 .clip(CircleShape)
                 .fillMaxWidth()
                 .clickable {
-                    actions.changePhoto()
+                    launcher.launch("image/*")
                 },
             model = currentUser?.photoUrl,
             contentDescription = "avatar",
@@ -103,7 +107,7 @@ fun MyAccountScreen(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp),
+                .padding(top = 16.dp),
             text = currentUser?.email ?: "",
             fontSize = 18.sp,
             textAlign = TextAlign.Center,
@@ -114,7 +118,7 @@ fun MyAccountScreen(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                .padding(top = 8.dp, start = 16.dp, end = 16.dp),
             value = name,
             onValueChange = { name = it },
             label = {
@@ -130,7 +134,7 @@ fun MyAccountScreen(
                 .padding(24.dp)
                 .fillMaxWidth(),
             onClick = {
-                actions.updateInfoAboutUser()
+                actions.updateInfoAboutUser(userPhoto, name)
             },
             border = BorderStroke(1.dp, Color(0xFFC060B1))
         ) {
@@ -145,8 +149,7 @@ fun MyAccountScreen(
 
         Text(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
+                .fillMaxWidth(),
             text = "Your Progress..",
             fontSize = 18.sp,
             textAlign = TextAlign.Center,
@@ -243,18 +246,26 @@ fun MyAccountScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 8.dp),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable {
+                        actions.signOut()
+                    },
                 text = "Log Out",
                 fontFamily = FontFamily.Serif,
                 color = Color(0xFF531549),
                 textAlign = TextAlign.Center
             )
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable {
+                        actions.removeAccount()
+                    },
                 text = "Remove Account",
                 fontFamily = FontFamily.Serif,
                 color = Color(0xFF531549),
@@ -291,5 +302,13 @@ fun PeriodProgress(modifier: Modifier, progress: Float, textProgress: String) {
 @Preview
 @Composable
 fun Preview() {
-    MyAccountScreen(actions = MyAccountActions({}, {}, {}, {}), currentUser = null)
+    MyAccountScreen(
+        actions = MyAccountActions(
+            updateInfoAboutUser = { uri, name -> },
+            {},
+            {},
+            {},
+            {},
+            {}), currentUser = null, userPhoto = null
+    )
 }

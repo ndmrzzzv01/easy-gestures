@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.ndmrzzzv.easygestures.R
+import com.ndmrzzzv.easygestures.googleSignInLauncher
 
 @Composable
 fun LoginScreen(

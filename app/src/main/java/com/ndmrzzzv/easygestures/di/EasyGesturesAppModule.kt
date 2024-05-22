@@ -14,7 +14,7 @@ val appModule = module {
 
     viewModel { SearchViewModel() }
 
-    viewModel { MyAccountViewModel() }
+    viewModel { MyAccountViewModel(androidContext()) }
 
 
 }

@@ -48,7 +48,8 @@ fun EasyGesturesApp() {
         composable(Screens.MyAccountScreen.route) {
             val viewModel = koinViewModel<MyAccountViewModel>()
             val actions = MyAccountActions.create(viewModel, navController)
-            MyAccountScreen(actions, viewModel.currentUser)
+            val userPhoto = viewModel.userImage.collectAsState().value
+            MyAccountScreen(actions, viewModel.currentUser, userPhoto)
         }
         composable(Screens.FavouriteScreen.route) {
 
