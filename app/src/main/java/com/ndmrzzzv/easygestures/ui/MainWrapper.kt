@@ -52,7 +52,7 @@ fun EasyGesturesApp() {
             MyAccountScreen(actions, viewModel.currentUser, userPhoto)
         }
         composable(Screens.FavouriteScreen.route) {
-
+            // TODO: save favourite courses to local DB. course id + user id + id
         }
     }
 }
