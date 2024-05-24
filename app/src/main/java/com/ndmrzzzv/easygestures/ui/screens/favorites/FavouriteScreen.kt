@@ -1,4 +1,7 @@
 package com.ndmrzzzv.easygestures.ui.screens.favorites
 
-class FavouriteScreen {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun FavouriteScreen() {
 }

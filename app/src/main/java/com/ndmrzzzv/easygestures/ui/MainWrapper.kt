@@ -6,6 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ndmrzzzv.easygestures.ui.screens.Screens
+import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestScreen
+import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestScreenActions
+import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestViewModel
+import com.ndmrzzzv.easygestures.ui.screens.favorites.FavouriteScreen
 import com.ndmrzzzv.easygestures.ui.screens.home.HomeScreen
 import com.ndmrzzzv.easygestures.ui.screens.home.HomeScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginScreen
@@ -14,11 +18,13 @@ import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountActions
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountScreen
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
+import com.ndmrzzzv.easygestures.ui.screens.result.ResultsScreen
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreen
-import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreenActions
+import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreen
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreenActions
+import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -42,9 +48,21 @@ fun EasyGesturesApp() {
         }
         composable(Screens.SearchScreen.route) {
             val viewModel = koinViewModel<SearchViewModel>()
-            val actions = SearchScreenActions.create(navController, viewModel)
+            val actions = SearchScreenActions.create(navController)
             val state = viewModel.courses.collectAsState().value
             SearchScreen(actions, state)
+        }
+        composable(Screens.ChooseTestScreen.route) {
+            val viewModel = koinViewModel<ChooseTestViewModel>()
+            val actions = ChooseTestScreenActions.create(navController)
+            val state = viewModel.lessons.collectAsState().value
+            ChooseTestScreen(actions, state)
+        }
+        composable(Screens.TestsScreen.route) {
+            TestsScreen()
+        }
+        composable(Screens.ResultsScreen.route) {
+            ResultsScreen()
         }
         composable(Screens.MyAccountScreen.route) {
             val viewModel = koinViewModel<MyAccountViewModel>()
@@ -53,7 +71,7 @@ fun EasyGesturesApp() {
             MyAccountScreen(actions, viewModel.currentUser, userPhoto)
         }
         composable(Screens.FavouriteScreen.route) {
-            //
+            FavouriteScreen()
         }
     }
 }

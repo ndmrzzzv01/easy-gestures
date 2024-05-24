@@ -4,6 +4,8 @@ import com.ndmrzzzv.domain.db.usecase.AddFavouriteCourseToDbUseCase
 import com.ndmrzzzv.domain.db.usecase.DeleteFavouriteCourseFromDbUseCase
 import com.ndmrzzzv.domain.db.usecase.GetAllFavouriteCoursesUseCase
 import com.ndmrzzzv.domain.network.usecase.GetAllCoursesUseCase
+import com.ndmrzzzv.domain.network.usecase.GetAllLessonsUseCase
+import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestViewModel
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
@@ -18,11 +20,15 @@ val appModule = module {
 
     viewModel { SearchViewModel(get()) }
 
+    viewModel { ChooseTestViewModel(get()) }
+
     viewModel { MyAccountViewModel(androidContext()) }
 
     // usecase
 
     single { GetAllCoursesUseCase(get()) }
+
+    single { GetAllLessonsUseCase(get()) }
 
     single { GetAllFavouriteCoursesUseCase(get()) }
 

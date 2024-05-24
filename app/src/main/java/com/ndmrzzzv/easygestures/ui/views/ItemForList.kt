@@ -24,13 +24,20 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
-fun ItemOfCourse(image: String?, title: String?, description: String?) {
+fun ItemOfCourse(
+    image: String?,
+    title: String?,
+    description: String?,
+    onClick:() -> Unit = {}
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
             .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
-            .clickable {},
+            .clickable {
+                onClick()
+            },
         border = BorderStroke(1.dp, Color.Magenta),
         elevation = CardDefaults.cardElevation(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)

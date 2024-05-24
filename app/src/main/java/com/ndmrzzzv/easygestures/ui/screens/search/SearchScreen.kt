@@ -67,7 +67,14 @@ fun SearchScreen(
                     modifier = Modifier
                 ) {
                     items(state.courses) {
-                        ItemOfCourse(image = it.image, title = it.title, description = it.description)
+                        ItemOfCourse(
+                            image = it.image,
+                            title = it.title,
+                            description = it.description,
+                            onClick = {
+                                actions.goToCourseDetailPage(it.id)
+                            }
+                        ) 
                     }
                 }
             }

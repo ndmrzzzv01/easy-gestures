@@ -3,6 +3,7 @@ package com.ndmrzzzv.network.network.repository
 import com.google.firebase.database.DatabaseReference
 import com.ndmrzzzv.domain.network.data.Course
 import com.google.firebase.database.ktx.getValue
+import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.domain.network.repository.CourseNetworkRepository
 import com.ndmrzzzv.network.utils.awaitSingle
 
@@ -22,6 +23,20 @@ class CourseNetworkRepositoryImpl(
             }
         }
         return listOfCourse
+    }
+
+    override suspend fun getAllLessonsByCourseId(courseId: Int): List<Lesson> {
+        val lessons = mutableListOf<Lesson>()
+        val reference = databaseReference.child("Lesson").awaitSingle()?.children
+        if (reference != null) {
+            for (item in reference) {
+                val lesson = item.getValue<Lesson>()
+                if (lesson != null && lesson.courseId == courseId) {
+                    lessons.add(lesson)
+                }
+            }
+        }
+        return lessons
     }
 
 }
