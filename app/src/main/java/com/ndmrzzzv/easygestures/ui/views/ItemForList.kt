@@ -21,13 +21,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 @Composable
-fun ItemOfCourse() {
+fun ItemOfCourse(image: String?, title: String?, description: String?) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(200.dp)
             .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
             .clickable {},
         border = BorderStroke(1.dp, Color.Magenta),
@@ -37,10 +38,10 @@ fun ItemOfCourse() {
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .padding(24.dp),
-                painter = painterResource(id = 0),
+                model = image,
                 contentDescription = ""
             )
 
@@ -51,13 +52,13 @@ fun ItemOfCourse() {
             ) {
                 Text(
                     modifier = Modifier,
-                    text = "pageItem.title",
+                    text = title ?: "",
                     fontSize = 22.sp,
                     fontFamily = FontFamily.Cursive
                 )
                 Text(
                     modifier = Modifier.padding(end = 16.dp, top = 8.dp),
-                    text = "pageItem.description",
+                    text = description ?: "",
                     fontSize = 12.sp,
                     fontFamily = FontFamily.Serif,
                     lineHeight = 14.sp,
@@ -70,5 +71,5 @@ fun ItemOfCourse() {
 @Preview
 @Composable
 fun Preview_Item() {
-    ItemOfCourse()
+    ItemOfCourse("", "", "")
 }

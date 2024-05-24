@@ -1,5 +1,9 @@
 package com.ndmrzzzv.easygestures.di
 
+import com.ndmrzzzv.domain.db.usecase.AddFavouriteCourseToDbUseCase
+import com.ndmrzzzv.domain.db.usecase.DeleteFavouriteCourseFromDbUseCase
+import com.ndmrzzzv.domain.db.usecase.GetAllFavouriteCoursesUseCase
+import com.ndmrzzzv.domain.network.usecase.GetAllCoursesUseCase
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
@@ -12,9 +16,19 @@ val appModule = module {
     // view models
     viewModel { LoginViewModel(androidContext()) }
 
-    viewModel { SearchViewModel() }
+    viewModel { SearchViewModel(get()) }
 
     viewModel { MyAccountViewModel(androidContext()) }
+
+    // usecase
+
+    single { GetAllCoursesUseCase(get()) }
+
+    single { GetAllFavouriteCoursesUseCase(get()) }
+
+    single { DeleteFavouriteCourseFromDbUseCase(get()) }
+
+    single { AddFavouriteCourseToDbUseCase(get()) }
 
 
 }

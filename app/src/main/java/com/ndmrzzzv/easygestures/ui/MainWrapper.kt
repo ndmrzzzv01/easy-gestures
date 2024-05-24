@@ -43,7 +43,8 @@ fun EasyGesturesApp() {
         composable(Screens.SearchScreen.route) {
             val viewModel = koinViewModel<SearchViewModel>()
             val actions = SearchScreenActions.create(navController, viewModel)
-            SearchScreen(actions)
+            val state = viewModel.courses.collectAsState().value
+            SearchScreen(actions, state)
         }
         composable(Screens.MyAccountScreen.route) {
             val viewModel = koinViewModel<MyAccountViewModel>()
@@ -52,7 +53,7 @@ fun EasyGesturesApp() {
             MyAccountScreen(actions, viewModel.currentUser, userPhoto)
         }
         composable(Screens.FavouriteScreen.route) {
-            // TODO: save favourite courses to local DB. course id + user id + id
+            //
         }
     }
 }
