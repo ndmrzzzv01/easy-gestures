@@ -25,7 +25,7 @@ fun CommonHeader() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        GifImage(modifier = Modifier.weight(1f))
+        GifImage(modifier = Modifier.weight(1f), gif = R.drawable.love)
         Text(
             text = stringResource(id = R.string.app_name),
             color = Color(0xFF13B165),

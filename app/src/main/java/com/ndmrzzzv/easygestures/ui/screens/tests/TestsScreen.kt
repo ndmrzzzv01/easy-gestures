@@ -4,9 +4,13 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -37,6 +41,7 @@ import coil.compose.AsyncImage
 import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.views.PagerIndicator
+import com.ndmrzzzv.easygestures.ui.views.TestItem
 
 @Composable
 fun TestsScreen(
@@ -55,7 +60,7 @@ fun TestsScreen(
     if (lesson != null) {
 
         if (lesson.type == "show") {
-            TestShowScreen()
+            TestShowScreen(lesson, actions.goToResultPage)
         } else {
             TestWriteScreen(lesson, actions.goToResultPage)
         }
@@ -65,7 +70,65 @@ fun TestsScreen(
 }
 
 @Composable
-fun TestShowScreen() {
+fun TestShowScreen(
+    lesson: Lesson?,
+    goToResultPage: () -> Unit
+) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+
+    ) {
+        if (lesson != null) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp, start = 16.dp, end = 16.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 16.sp,
+                text = lesson.description ?: "",
+                fontFamily = FontFamily.Serif,
+                lineHeight = 14.sp
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .weight(1f)
+            ) {
+                val questions = lesson.questions?.shuffled() ?: listOf()
+                items(questions) {
+                    TestItem(
+                        image = null,
+                        question = it.text,
+                        onClick = {
+                            // запрашивать разрешение на фото
+                        }
+                    )
+                }
+            }
+            Button(
+                modifier = Modifier
+                    .padding(end = 8.dp, top = 8.dp, bottom = 8.dp)
+                    .height(40.dp)
+                    .align(Alignment.End),
+                onClick = { goToResultPage() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF531549)
+                )
+            ) {
+                Text(text = "Go to see result")
+                Icon(
+                    modifier = Modifier
+                        .padding(start = 4.dp),
+                    imageVector = Icons.Outlined.ArrowForward,
+                    contentDescription = "go"
+                )
+            }
+        }
+
+    }
 
 }
 
@@ -75,7 +138,6 @@ fun TestWriteScreen(
     lesson: Lesson?,
     goToResultPage: () -> Unit
 ) {
-    var isButtonVisible by remember { mutableStateOf(false) }
     val questions = lesson?.questions?.shuffled() ?: listOf()
     if (lesson != null) {
         Column(
@@ -133,7 +195,12 @@ fun TestWriteScreen(
                             )
                         ) {
                             Text(text = "Go to see result")
-                            Icon(Icons.Outlined.ArrowForward, "go")
+                            Icon(
+                                modifier = Modifier
+                                    .padding(start = 4.dp),
+                                imageVector = Icons.Outlined.ArrowForward,
+                                contentDescription = "go"
+                            )
                         }
                     }
                 }

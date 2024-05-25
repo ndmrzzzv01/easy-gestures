@@ -16,7 +16,8 @@ import com.ndmrzzzv.easygestures.R
 
 @Composable
 fun GifImage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    gif: Int
 ) {
     val context = LocalContext.current
     val imageLoader = ImageLoader.Builder(context)
@@ -28,7 +29,7 @@ fun GifImage(
         painter = rememberAsyncImagePainter(
             ImageRequest
                 .Builder(context)
-                .data(data = R.drawable.love)
+                .data(data = gif)
                 .apply(block = {
                     size(Size.ORIGINAL)
                 }).build(),
