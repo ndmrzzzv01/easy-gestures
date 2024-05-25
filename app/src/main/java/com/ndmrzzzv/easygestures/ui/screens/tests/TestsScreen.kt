@@ -106,26 +106,26 @@ fun TestShowScreen(
                 lineHeight = 14.sp
             )
 
-            val file = context.createImageFile()
-            val uri = FileProvider.getUriForFile(
-                Objects.requireNonNull(context), "com.ndmrzzzv.easygestures.provider", file
-            )
-
             var currentQuestion by remember { mutableStateOf<String?>(null) }
+            var currentUri by remember { mutableStateOf<Uri?>(null) }
 
             val cameraLauncher =
-                rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
-                    if (it && currentQuestion != null) {
-                        imageUriMap[currentQuestion!!] = uri
+                rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { result ->
+                    if (result && currentQuestion != null) {
+                        currentUri?.let { uri ->
+                            imageUriMap[currentQuestion!!] = uri
+                        }
                     }
                 }
 
             val permissionLauncher = rememberLauncherForActivityResult(
                 ActivityResultContracts.RequestPermission()
-            ) {
-                if (it) {
+            ) { isGranted ->
+                if (isGranted) {
                     Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
-                    cameraLauncher.launch(uri)
+                    currentUri?.let { uri ->
+                        cameraLauncher.launch(uri)
+                    }
                 } else {
                     Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
                 }
@@ -148,9 +148,13 @@ fun TestShowScreen(
                         question = question.text,
                         onClick = {
                             currentQuestion = question.text
+                            val file = context.createImageFile()
+                            currentUri = FileProvider.getUriForFile(
+                                context, "com.ndmrzzzv.easygestures.provider", file
+                            )
                             val permissionCheckResult = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
                             if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-                                cameraLauncher.launch(uri)
+                                cameraLauncher.launch(currentUri!!)
                             } else {
                                 permissionLauncher.launch(Manifest.permission.CAMERA)
                             }
