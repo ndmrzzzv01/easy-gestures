@@ -1,10 +1,16 @@
 package com.ndmrzzzv.easygestures.ui.screens.tests
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.MediaStore
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,17 +37,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.views.PagerIndicator
 import com.ndmrzzzv.easygestures.ui.views.TestItem
+import com.ndmrzzzv.network.utils.createImageFile
+import java.util.Objects
 
 @Composable
 fun TestsScreen(
@@ -92,6 +104,36 @@ fun TestShowScreen(
                 lineHeight = 14.sp
             )
 
+            val context = LocalContext.current
+            val file = context.createImageFile()
+            val uri = FileProvider.getUriForFile(
+                Objects.requireNonNull(context), "com.ndmrzzzv.easygestures.provider", file
+            )
+
+            var capturedImageUri by remember {
+                mutableStateOf<Uri>(Uri.EMPTY)
+            }
+
+            val cameraLauncher =
+                rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
+                    capturedImageUri = uri
+                }
+
+            val permissionLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) {
+                if (it) {
+                    Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
+                    cameraLauncher.launch(uri)
+                } else {
+                    Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            val image = if (capturedImageUri.path?.isNotEmpty() == true) {
+                rememberImagePainter(capturedImageUri)
+            } else null
+
             LazyColumn(
                 modifier = Modifier
                     .padding(top = 8.dp)
@@ -100,10 +142,16 @@ fun TestShowScreen(
                 val questions = lesson.questions?.shuffled() ?: listOf()
                 items(questions) {
                     TestItem(
-                        image = null,
+                        image = image,
                         question = it.text,
                         onClick = {
-                            // запрашивать разрешение на фото
+                            val permissionCheckResult =
+                                ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                            if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+                                cameraLauncher.launch(uri)
+                            } else {
+                                permissionLauncher.launch(Manifest.permission.CAMERA)
+                            }
                         }
                     )
                 }
@@ -127,9 +175,7 @@ fun TestShowScreen(
                 )
             }
         }
-
     }
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)
