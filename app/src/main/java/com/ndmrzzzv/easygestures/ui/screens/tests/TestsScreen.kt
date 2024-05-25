@@ -3,7 +3,6 @@ package com.ndmrzzzv.easygestures.ui.screens.tests
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -54,7 +53,6 @@ import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.views.PagerIndicator
 import com.ndmrzzzv.easygestures.ui.views.TestItem
 import com.ndmrzzzv.network.utils.createImageFile
-import java.util.Objects
 
 @Composable
 fun TestsScreen(
