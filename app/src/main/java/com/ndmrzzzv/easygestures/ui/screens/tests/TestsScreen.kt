@@ -30,6 +30,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -86,11 +87,12 @@ fun TestShowScreen(
     lesson: Lesson?,
     goToResultPage: () -> Unit
 ) {
+    val context = LocalContext.current
+    val imageUriMap = remember { mutableStateMapOf<String, Uri>() }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-
     ) {
         if (lesson != null) {
             Text(
@@ -104,19 +106,18 @@ fun TestShowScreen(
                 lineHeight = 14.sp
             )
 
-            val context = LocalContext.current
             val file = context.createImageFile()
             val uri = FileProvider.getUriForFile(
                 Objects.requireNonNull(context), "com.ndmrzzzv.easygestures.provider", file
             )
 
-            var capturedImageUri by remember {
-                mutableStateOf<Uri>(Uri.EMPTY)
-            }
+            var currentQuestion by remember { mutableStateOf<String?>(null) }
 
             val cameraLauncher =
                 rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
-                    capturedImageUri = uri
+                    if (it && currentQuestion != null) {
+                        imageUriMap[currentQuestion!!] = uri
+                    }
                 }
 
             val permissionLauncher = rememberLauncherForActivityResult(
@@ -130,23 +131,24 @@ fun TestShowScreen(
                 }
             }
 
-            val image = if (capturedImageUri.path?.isNotEmpty() == true) {
-                rememberImagePainter(capturedImageUri)
-            } else null
-
             LazyColumn(
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .weight(1f)
             ) {
                 val questions = lesson.questions?.shuffled() ?: listOf()
-                items(questions) {
+                items(questions) { question ->
+                    val imageUri = imageUriMap[question.text]
+                    val image = if (imageUri != null && imageUri.path?.isNotEmpty() == true) {
+                        rememberImagePainter(imageUri)
+                    } else null
+
                     TestItem(
                         image = image,
-                        question = it.text,
+                        question = question.text,
                         onClick = {
-                            val permissionCheckResult =
-                                ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                            currentQuestion = question.text
+                            val permissionCheckResult = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
                             if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
                                 cameraLauncher.launch(uri)
                             } else {
