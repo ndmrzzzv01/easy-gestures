@@ -46,7 +46,10 @@ fun ChooseTestScreen(
                         ItemOfCourse(
                             image = it.image,
                             title = "Type: ${it.type}",
-                            description = it.description
+                            description = it.description,
+                            onClick = {
+                                actions.goToStudyLesson(it)
+                            }
                         )
                     }
                 }

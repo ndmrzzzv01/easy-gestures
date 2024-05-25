@@ -25,6 +25,8 @@ import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreen
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreen
+import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
+import com.ndmrzzzv.easygestures.utils.StudyData
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -59,7 +61,8 @@ fun EasyGesturesApp() {
             ChooseTestScreen(actions, state)
         }
         composable(Screens.TestsScreen.route) {
-            TestsScreen()
+            val actions = TestsScreenActions.create(navController)
+            TestsScreen(actions, StudyData.lesson)
         }
         composable(Screens.ResultsScreen.route) {
             ResultsScreen()
