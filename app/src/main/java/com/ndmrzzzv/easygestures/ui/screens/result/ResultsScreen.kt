@@ -6,9 +6,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -17,16 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ndmrzzzv.easygestures.R
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowForward
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import com.ndmrzzzv.easygestures.ui.views.ItemResult
 import com.ndmrzzzv.easygestures.utils.StudyData
 
@@ -58,9 +57,14 @@ fun ResultsScreen() {
             modifier = Modifier
                 .padding(top = 8.dp)
                 .weight(1f)
-         ) {
-            items(StudyData.lesson?.questions ?: listOf()) {
-                ItemResult(question = it.text, answer = "A", result = "correct", colorOfBorder = Color.Green)
+        ) {
+            items(StudyData.questions) {
+                ItemResult(
+                    question = it.question,
+                    answer = it.answer,
+                    result = it.result,
+                    colorOfBorder = it.colorOfBorder
+                )
             }
         }
 
@@ -69,7 +73,7 @@ fun ResultsScreen() {
                 .padding(end = 8.dp, top = 8.dp, bottom = 8.dp)
                 .height(40.dp)
                 .align(Alignment.End),
-            onClick = {  },
+            onClick = { },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF531549)
             )
@@ -86,7 +90,6 @@ fun ResultsScreen() {
     }
 
 }
-
 
 
 @Composable
