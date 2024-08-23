@@ -18,7 +18,7 @@ data class HomeScreenActions(
                     navController.navigate(Screens.MyAccountScreen.route)
                 },
                 goToFavouritePage = {
-
+                    navController.navigate(Screens.FavouriteScreen.route)
                 },
                 goToSearchPage = {
                     navController.navigate(Screens.SearchScreen.route)

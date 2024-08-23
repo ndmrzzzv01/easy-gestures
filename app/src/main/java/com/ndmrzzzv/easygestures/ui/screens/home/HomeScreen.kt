@@ -167,11 +167,3 @@ fun OddItemPage(pageItem: HomeData) {
 
     }
 }
-
-
-//@Preview
-//@Composable
-//fun Preview() {
-//    ItemPage(id = 1)
-//}
-
