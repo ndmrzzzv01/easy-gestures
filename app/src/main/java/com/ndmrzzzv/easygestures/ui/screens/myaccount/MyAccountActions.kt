@@ -10,8 +10,7 @@ data class MyAccountActions(
     val changePhoto: (uri: Uri?) -> Unit,
     val findACourse: () -> Unit,
     val goToFavourite: () -> Unit,
-    val signOut: () -> Unit,
-    val removeAccount: () -> Unit
+    val signOut: () -> Unit
 ) {
 
     companion object {
@@ -33,10 +32,6 @@ data class MyAccountActions(
                     navController.navigate(Screens.FavouriteScreen.route)
                 },
                 signOut = {
-                    viewModel.signOut()
-                    navController.navigate(Screens.LoginScreen.route)
-                },
-                removeAccount = {
                     viewModel.signOut()
                     navController.navigate(Screens.LoginScreen.route)
                 }

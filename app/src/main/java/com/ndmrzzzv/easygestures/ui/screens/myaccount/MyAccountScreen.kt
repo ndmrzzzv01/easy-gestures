@@ -260,17 +260,6 @@ fun MyAccountScreen(
                 color = Color(0xFF531549),
                 textAlign = TextAlign.Center
             )
-            Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .clickable {
-                        actions.removeAccount()
-                    },
-                text = "Remove Account",
-                fontFamily = FontFamily.Serif,
-                color = Color(0xFF531549),
-                textAlign = TextAlign.Center
-            )
         }
 
     }
