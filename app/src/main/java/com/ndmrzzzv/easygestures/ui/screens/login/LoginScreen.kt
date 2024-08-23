@@ -41,7 +41,7 @@ fun LoginScreen(
 
     Image(
         modifier = Modifier.fillMaxSize(),
-        painter = painterResource(id = R.drawable.background),
+        painter = painterResource(id = R.drawable.login_background),
         contentDescription = "background",
         contentScale = ContentScale.FillBounds,
         alpha = 0.5f
