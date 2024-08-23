@@ -16,6 +16,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -31,6 +35,9 @@ fun SearchScreen(
     actions: SearchScreenActions,
     state: CourseState
 ) {
+
+    var defaultStringForSearchInput by remember { mutableStateOf("") }
+
     Image(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(id = R.drawable.background),
@@ -47,8 +54,11 @@ fun SearchScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-            value = "",
-            onValueChange = { },
+            value = defaultStringForSearchInput,
+            onValueChange = {
+                defaultStringForSearchInput = it
+                actions.searchEvent(it)
+            },
             label = { Text("Search") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             trailingIcon = {
@@ -80,7 +90,9 @@ fun SearchScreen(
             }
             is CourseState.Loading -> {
                 CircularProgressIndicator(
-                    modifier = Modifier.padding(top = 24.dp).align(Alignment.CenterHorizontally)
+                    modifier = Modifier
+                        .padding(top = 24.dp)
+                        .align(Alignment.CenterHorizontally)
                 )
             }
             is CourseState.Error -> {
@@ -99,5 +111,5 @@ fun SearchScreen(
 @Composable
 @Preview
 fun Preview_Search() {
-    SearchScreen(actions = SearchScreenActions { }, state = CourseState.Loading)
+    SearchScreen(actions = SearchScreenActions ({ }, {}), state = CourseState.Loading)
 }

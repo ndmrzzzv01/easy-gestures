@@ -14,6 +14,9 @@ class SearchViewModel(
 
     private val _courses = MutableStateFlow<CourseState>(CourseState.Loading)
     val courses: StateFlow<CourseState> = _courses
+    private var allCourses = listOf<Course>()
+
+    private val _searchText = MutableStateFlow("")
 
     init {
         getAllCourses()
@@ -21,8 +24,22 @@ class SearchViewModel(
 
     private fun getAllCourses() {
         viewModelScope.launch {
-            _courses.value = CourseState.Success(getAllCoursesUseCase())
+            val result = CourseState.Success(getAllCoursesUseCase())
+            _courses.value = result
+            allCourses = result.courses
         }
+    }
+
+    fun setSearchText(searchText: String) {
+        _searchText.value = searchText
+        filterCourses()
+    }
+
+    private fun filterCourses() {
+        val searchResult = allCourses.filter {
+            it.title?.lowercase()?.contains(_searchText.value.lowercase()) == true
+        }
+        _courses.value = CourseState.Success(searchResult)
     }
 
 }

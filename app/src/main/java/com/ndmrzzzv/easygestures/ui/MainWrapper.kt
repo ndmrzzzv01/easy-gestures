@@ -50,7 +50,7 @@ fun EasyGesturesApp() {
         }
         composable(Screens.SearchScreen.route) {
             val viewModel = koinViewModel<SearchViewModel>()
-            val actions = SearchScreenActions.create(navController)
+            val actions = SearchScreenActions.create(navController, viewModel)
             val state = viewModel.courses.collectAsState().value
             SearchScreen(actions, state)
         }
