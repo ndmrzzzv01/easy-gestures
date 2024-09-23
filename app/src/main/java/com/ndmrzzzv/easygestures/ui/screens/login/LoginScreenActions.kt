@@ -5,9 +5,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.ndmrzzzv.easygestures.ui.screens.Screens
 
 data class LoginScreenActions(
-    val loginWithEmail: (email: String, password: String) -> Unit,
+    val loginWithEmail: () -> Unit,
     val loginWithGoogle: (account: GoogleSignInAccount) -> Unit,
-    val goToHomePage:() -> Unit
+    val goToHomePage:() -> Unit,
+    val updateEmail: (email: String) -> Unit,
+    val updatePassword: (password: String) -> Unit,
 ) {
 
     companion object {
@@ -16,14 +18,20 @@ data class LoginScreenActions(
             navController: NavHostController
         ) : LoginScreenActions {
             return LoginScreenActions(
-                loginWithEmail = { email, password ->
-                    viewModel.signInWithEmailAndPassword(email, password)
+                loginWithEmail = {
+                    viewModel.signInWithEmailAndPassword()
                 },
                 loginWithGoogle = {
                     viewModel.handleGoogleSignInResult(it)
                 },
                 goToHomePage = {
                     navController.navigate(Screens.HomeScreen.route)
+                },
+                updateEmail = { email ->
+                    viewModel.updateEmail(email)
+                },
+                updatePassword = { password ->
+                    viewModel.updatePassword(password)
                 }
             )
         }

@@ -37,6 +37,8 @@ fun LoginScreen(
     actions: LoginScreenActions,
     authState: AuthState,
     client: GoogleSignInClient,
+    email: String,
+    password: String,
 ) {
 
     Image(
@@ -54,8 +56,6 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
 
         Text(
             modifier = Modifier
@@ -73,7 +73,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
             value = email,
-            onValueChange = { email = it },
+            onValueChange = { actions.updateEmail(it) },
             label = { Text("Email") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
@@ -83,7 +83,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { actions.updatePassword(it) },
             label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
@@ -93,7 +93,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
-            onClick = { actions.loginWithEmail(email, password) },
+            onClick = { actions.loginWithEmail() },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFC060B1))
         ) {
             Text("Login with Email", color = Color.White)

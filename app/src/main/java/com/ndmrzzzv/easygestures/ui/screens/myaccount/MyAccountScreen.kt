@@ -297,7 +297,6 @@ fun Preview() {
             {},
             {},
             {},
-            {},
             {}), currentUser = null, userPhoto = null
     )
 }

@@ -1,7 +1,5 @@
 package com.ndmrzzzv.easygestures.ui
 
-import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
@@ -43,8 +41,10 @@ fun EasyGesturesApp() {
             val viewModel = koinViewModel<LoginViewModel>()
             val actions = LoginScreenActions.create(viewModel, navController)
             val authState = viewModel.authState.collectAsState().value
+            val email = viewModel.email.collectAsState().value
+            val password = viewModel.password.collectAsState().value
             val client = viewModel.getGoogleSignInClient()
-            LoginScreen(actions, authState, client)
+            LoginScreen(actions, authState, client, email, password)
         }
         composable(Screens.HomeScreen.route) {
             val context = LocalContext.current
