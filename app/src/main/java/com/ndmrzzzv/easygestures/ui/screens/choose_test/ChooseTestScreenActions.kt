@@ -1,6 +1,5 @@
 package com.ndmrzzzv.easygestures.ui.screens.choose_test
 
-import android.util.Log
 import androidx.navigation.NavHostController
 import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.easygestures.ui.screens.Screens
@@ -17,7 +16,6 @@ data class ChooseTestScreenActions(
             return ChooseTestScreenActions(
                goToStudyLesson =  {
                    StudyData.lesson = it
-                   Log.d("TESTV", StudyData.lesson.toString())
                    navController.navigate(Screens.TestsScreen.route)
                }
             )

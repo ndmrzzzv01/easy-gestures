@@ -1,7 +1,6 @@
 package com.ndmrzzzv.easygestures.ui.screens.login
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -37,7 +36,6 @@ class LoginViewModel(
     fun signInWithEmailAndPassword() {
         val email = _email.value
         val password = _password.value
-        Log.d("TESTV", "$email - $password")
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 _authState.value = if (task.isSuccessful) {
