@@ -1,7 +1,10 @@
 package com.ndmrzzzv.easygestures.ui
 
+import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -9,7 +12,6 @@ import com.ndmrzzzv.easygestures.ui.screens.Screens
 import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestScreen
 import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestViewModel
-import com.ndmrzzzv.easygestures.ui.screens.favorites.FavouriteScreen
 import com.ndmrzzzv.easygestures.ui.screens.home.HomeScreen
 import com.ndmrzzzv.easygestures.ui.screens.home.HomeScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginScreen
@@ -45,7 +47,8 @@ fun EasyGesturesApp() {
             LoginScreen(actions, authState, client)
         }
         composable(Screens.HomeScreen.route) {
-            val actions = HomeScreenActions.create(navController)
+            val context = LocalContext.current
+            val actions = HomeScreenActions.create(context, navController)
             HomeScreen(actions)
         }
         composable(Screens.SearchScreen.route) {
@@ -68,13 +71,11 @@ fun EasyGesturesApp() {
             ResultsScreen()
         }
         composable(Screens.MyAccountScreen.route) {
+            val context = LocalContext.current
             val viewModel = koinViewModel<MyAccountViewModel>()
-            val actions = MyAccountActions.create(viewModel, navController)
+            val actions = MyAccountActions.create(context, viewModel, navController)
             val userPhoto = viewModel.userImage.collectAsState().value
             MyAccountScreen(actions, viewModel.currentUser, userPhoto)
-        }
-        composable(Screens.FavouriteScreen.route) {
-            FavouriteScreen()
         }
     }
 }

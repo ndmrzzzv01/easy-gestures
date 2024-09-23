@@ -10,6 +10,5 @@ sealed class Screens(val route: String) {
     object TestsScreen: Screens("tests")
     object ResultsScreen: Screens("results")
     object MyAccountScreen: Screens("my_account_screen")
-    object FavouriteScreen: Screens("favourite_screen")
 
 }

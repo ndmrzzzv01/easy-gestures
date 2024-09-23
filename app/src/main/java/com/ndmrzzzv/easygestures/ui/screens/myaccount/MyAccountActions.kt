@@ -1,6 +1,8 @@
 package com.ndmrzzzv.easygestures.ui.screens.myaccount
 
+import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.navigation.NavHostController
 import com.ndmrzzzv.easygestures.getImageForMyAccountLauncher
 import com.ndmrzzzv.easygestures.ui.screens.Screens
@@ -15,6 +17,7 @@ data class MyAccountActions(
 
     companion object {
         fun create(
+            context: Context,
             viewModel: MyAccountViewModel,
             navController: NavHostController
         ): MyAccountActions {
@@ -29,7 +32,7 @@ data class MyAccountActions(
                     navController.navigate(Screens.SearchScreen.route)
                 },
                 goToFavourite = {
-                    navController.navigate(Screens.FavouriteScreen.route)
+                    Toast.makeText(context, "Not yet implemented", Toast.LENGTH_SHORT).show()
                 },
                 signOut = {
                     viewModel.signOut()

@@ -1,5 +1,8 @@
 package com.ndmrzzzv.easygestures.ui.screens.home
 
+import android.content.Context
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.ndmrzzzv.easygestures.ui.screens.Screens
 
@@ -11,6 +14,7 @@ data class HomeScreenActions(
 
     companion object {
         fun create(
+            context: Context,
             navController: NavHostController
         ): HomeScreenActions {
             return HomeScreenActions(
@@ -18,7 +22,7 @@ data class HomeScreenActions(
                     navController.navigate(Screens.MyAccountScreen.route)
                 },
                 goToFavouritePage = {
-                    navController.navigate(Screens.FavouriteScreen.route)
+                    Toast.makeText(context, "Not yet implemented", Toast.LENGTH_SHORT).show()
                 },
                 goToSearchPage = {
                     navController.navigate(Screens.SearchScreen.route)
