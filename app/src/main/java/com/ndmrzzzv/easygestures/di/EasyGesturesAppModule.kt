@@ -8,6 +8,7 @@ import com.ndmrzzzv.domain.network.usecase.GetAllLessonsUseCase
 import com.ndmrzzzv.easygestures.ui.screens.choose_test.ChooseTestViewModel
 import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
+import com.ndmrzzzv.easygestures.ui.screens.result.ResultViewModel
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestResultViewModel
 import com.ndmrzzzv.easygestures.utils.ClassifyImage
@@ -28,6 +29,8 @@ val appModule = module {
     viewModel { MyAccountViewModel(androidContext()) }
 
     viewModel { TestResultViewModel() }
+
+    viewModel { ResultViewModel() }
 
     // usecase
     single { GetAllCoursesUseCase(get()) }

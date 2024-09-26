@@ -26,10 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.views.ItemResult
-import com.ndmrzzzv.easygestures.utils.StudyData
 
 @Composable
-fun ResultsScreen(actions: ResultScreenAction) {
+fun ResultsScreen(
+    actions: ResultScreenAction,
+    resultOfTest: List<Pair<String, String>>
+) {
 
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -57,7 +59,7 @@ fun ResultsScreen(actions: ResultScreenAction) {
                 .padding(top = 8.dp)
                 .weight(1f)
         ) {
-            items(StudyData.result) { (userAnswer, question) ->
+            items(resultOfTest) { (userAnswer, question) ->
                 val isCorrect = question == userAnswer
                 val colorOfBorder = if (isCorrect) Color.Green else Color.Red
                 ItemResult(

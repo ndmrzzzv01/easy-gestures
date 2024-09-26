@@ -19,6 +19,7 @@ import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountActions
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountScreen
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
 import com.ndmrzzzv.easygestures.ui.screens.result.ResultScreenAction
+import com.ndmrzzzv.easygestures.ui.screens.result.ResultViewModel
 import com.ndmrzzzv.easygestures.ui.screens.result.ResultsScreen
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreen
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreenActions
@@ -72,8 +73,10 @@ fun EasyGesturesApp() {
             TestsScreen(actions, lesson, questions)
         }
         composable(Screens.ResultsScreen.route) {
+            val viewModel = koinViewModel<ResultViewModel>()
             val actions = ResultScreenAction.create(navController)
-            ResultsScreen(actions)
+            val resultOfTest = viewModel.getResultOfTest()
+            ResultsScreen(actions, resultOfTest)
         }
         composable(Screens.MyAccountScreen.route) {
             val context = LocalContext.current
