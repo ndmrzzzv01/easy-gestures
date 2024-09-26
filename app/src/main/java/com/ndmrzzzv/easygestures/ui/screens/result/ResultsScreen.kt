@@ -22,7 +22,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ndmrzzzv.easygestures.R
@@ -30,7 +29,7 @@ import com.ndmrzzzv.easygestures.ui.views.ItemResult
 import com.ndmrzzzv.easygestures.utils.StudyData
 
 @Composable
-fun ResultsScreen() {
+fun ResultsScreen(actions: ResultScreenAction) {
 
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -58,12 +57,14 @@ fun ResultsScreen() {
                 .padding(top = 8.dp)
                 .weight(1f)
         ) {
-            items(StudyData.questions) {
+            items(StudyData.result) { (userAnswer, question) ->
+                val isCorrect = question == userAnswer
+                val colorOfBorder = if (isCorrect) Color.Green else Color.Red
                 ItemResult(
-                    question = it.question,
-                    answer = it.answer,
-                    result = it.result,
-                    colorOfBorder = it.colorOfBorder
+                    question = "Question",
+                    answer = userAnswer,
+                    result = question,
+                    colorOfBorder = colorOfBorder
                 )
             }
         }
@@ -73,7 +74,9 @@ fun ResultsScreen() {
                 .padding(end = 8.dp, top = 8.dp, bottom = 8.dp)
                 .height(40.dp)
                 .align(Alignment.End),
-            onClick = { },
+            onClick = {
+                actions.goToHomePage()
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF531549)
             )
@@ -86,14 +89,5 @@ fun ResultsScreen() {
                 contentDescription = "go"
             )
         }
-
     }
-
-}
-
-
-@Composable
-@Preview
-fun Preview__ResultsScreen() {
-    ResultsScreen()
 }

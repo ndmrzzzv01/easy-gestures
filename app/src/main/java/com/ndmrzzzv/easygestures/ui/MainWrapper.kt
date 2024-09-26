@@ -18,15 +18,16 @@ import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountActions
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountScreen
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
+import com.ndmrzzzv.easygestures.ui.screens.result.ResultScreenAction
 import com.ndmrzzzv.easygestures.ui.screens.result.ResultsScreen
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreen
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreen
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreenActions
+import com.ndmrzzzv.easygestures.ui.screens.tests.TestResultViewModel
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreen
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
-import com.ndmrzzzv.easygestures.utils.StudyData
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -64,11 +65,15 @@ fun EasyGesturesApp() {
             ChooseTestScreen(actions, state)
         }
         composable(Screens.TestsScreen.route) {
+            val viewModel = koinViewModel<TestResultViewModel>()
+            val lesson = viewModel.getLesson()
+            val questions = viewModel.getQuestionsInLesson()
             val actions = TestsScreenActions.create(navController)
-            TestsScreen(actions, StudyData.lesson)
+            TestsScreen(actions, lesson, questions)
         }
         composable(Screens.ResultsScreen.route) {
-            ResultsScreen()
+            val actions = ResultScreenAction.create(navController)
+            ResultsScreen(actions)
         }
         composable(Screens.MyAccountScreen.route) {
             val context = LocalContext.current
