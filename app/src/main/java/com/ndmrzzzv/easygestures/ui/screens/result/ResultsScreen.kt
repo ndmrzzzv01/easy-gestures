@@ -26,11 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.views.ItemResult
+import com.ndmrzzzv.easygestures.utils.TestResult
 
 @Composable
 fun ResultsScreen(
     actions: ResultScreenAction,
-    resultOfTest: List<Pair<String, String>>
+    resultOfTest: List<TestResult>
 ) {
 
     Image(
@@ -59,13 +60,13 @@ fun ResultsScreen(
                 .padding(top = 8.dp)
                 .weight(1f)
         ) {
-            items(resultOfTest) { (userAnswer, question) ->
-                val isCorrect = question == userAnswer
+            items(resultOfTest) { testResult ->
+                val isCorrect = testResult.correctAnswer == testResult.userAnswer
                 val colorOfBorder = if (isCorrect) Color.Green else Color.Red
                 ItemResult(
-                    question = "Question",
-                    answer = userAnswer,
-                    result = question,
+                    question = testResult.question,
+                    answer = testResult.userAnswer,
+                    result = testResult.correctAnswer,
                     colorOfBorder = colorOfBorder
                 )
             }

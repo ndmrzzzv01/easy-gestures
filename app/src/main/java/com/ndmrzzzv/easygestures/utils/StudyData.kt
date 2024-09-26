@@ -10,5 +10,5 @@ object StudyData {
     var lesson: Lesson? = null
         get() = field
 
-    var result = listOf<Pair<String, String>>()
+    var result = listOf<TestResult>()
 }

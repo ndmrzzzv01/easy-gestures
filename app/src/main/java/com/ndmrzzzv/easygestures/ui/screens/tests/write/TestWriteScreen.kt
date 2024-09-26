@@ -17,11 +17,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +32,7 @@ import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.domain.network.data.Question
 import com.ndmrzzzv.easygestures.ui.views.PagerIndicator
 import com.ndmrzzzv.easygestures.utils.StudyData
+import com.ndmrzzzv.easygestures.utils.TestResult
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -65,7 +63,6 @@ fun TestWriteScreen(
             PagerIndicator(pagerState = pagerState)
 
             HorizontalPager(state = pagerState) { page ->
-                var answer by remember { mutableStateOf("") }
                 Column(
                     modifier = Modifier,
                     verticalArrangement = Arrangement.Top,
@@ -103,7 +100,11 @@ fun TestWriteScreen(
                                 .padding(end = 16.dp, top = 16.dp),
                             onClick = {
                                 val results = questions.mapIndexed { index, question ->
-                                    Pair(userAnswers.getOrNull(index) ?: "", question.correct_answer ?: "")
+                                    TestResult(
+                                        question = question.text ?: "",
+                                        correctAnswer = question.correct_answer ?: "",
+                                        userAnswer = userAnswers[index]
+                                    )
                                 }
                                 StudyData.result = results
                                 goToResultPage()
