@@ -1,6 +1,7 @@
 package com.ndmrzzzv.easygestures.utils
 
 import com.ndmrzzzv.domain.network.data.Lesson
+import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 
 object StudyData {
 

@@ -32,7 +32,7 @@ import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.domain.network.data.Question
 import com.ndmrzzzv.easygestures.ui.views.PagerIndicator
 import com.ndmrzzzv.easygestures.utils.StudyData
-import com.ndmrzzzv.easygestures.utils.TestResult
+import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -101,7 +101,7 @@ fun TestWriteScreen(
                             onClick = {
                                 val results = questions.mapIndexed { index, question ->
                                     TestResult(
-                                        question = question.text ?: "",
+                                        question = "",
                                         correctAnswer = question.correct_answer ?: "",
                                         userAnswer = userAnswers[index]
                                     )

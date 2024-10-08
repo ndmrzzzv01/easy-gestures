@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.views.ItemResult
-import com.ndmrzzzv.easygestures.utils.TestResult
+import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 
 @Composable
 fun ResultsScreen(

@@ -1,4 +1,4 @@
-package com.ndmrzzzv.easygestures.utils
+package com.ndmrzzzv.easygestures.ui.screens.tests.data
 
 data class TestResult(
     val question: String,
