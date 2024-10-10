@@ -67,8 +67,10 @@ fun EasyGesturesApp() {
         }
         composable(Screens.TestsScreen.route) {
             val viewModel = koinViewModel<TestResultViewModel>()
+
             val lesson = viewModel.getLesson()
             val questions = viewModel.getQuestionsInLesson()
+
             val actions = TestsScreenActions.create(navController)
             TestsScreen(actions, lesson, questions)
         }

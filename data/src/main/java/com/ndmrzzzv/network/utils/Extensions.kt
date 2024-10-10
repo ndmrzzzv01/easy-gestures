@@ -2,6 +2,10 @@ package com.ndmrzzzv.network.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -33,7 +37,6 @@ suspend fun DatabaseReference.awaitSingle(): DataSnapshot? =
         this.addValueEventListener(listener)
     }
 
-
 @SuppressLint("SimpleDateFormat")
 fun Context.createImageFile(): File {
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -44,4 +47,8 @@ fun Context.createImageFile(): File {
         externalCacheDir
     )
     return image
+}
+
+fun Uri.toBitmap(context: Context): Bitmap {
+    return MediaStore.Images.Media.getBitmap(context.contentResolver, this)
 }

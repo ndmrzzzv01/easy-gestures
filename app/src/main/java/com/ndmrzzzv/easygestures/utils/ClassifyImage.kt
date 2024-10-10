@@ -12,20 +12,20 @@ import java.nio.ByteOrder
 class ClassifyImage(
     private val context: Context
 ) {
-
     private val imageSize = 224
 
-    fun classifyImage(image: Bitmap) {
+    fun classifyImage(image: Bitmap, onResult: (String) -> Unit = {}) {
         try {
+            val resizedImage = Bitmap.createScaledBitmap(image, imageSize, imageSize, false)
+
             val model = Model.newInstance(context)
 
-            val inputFeature0 =
-                TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, imageSize, imageSize, 3), DataType.FLOAT32)
             val byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3)
             byteBuffer.order(ByteOrder.nativeOrder())
 
             val intValues = IntArray(imageSize * imageSize)
-            image.getPixels(intValues, 0, image.width, 0, 0, image.width, image.height)
+            resizedImage.getPixels(intValues, 0, resizedImage.width, 0, 0, resizedImage.width, resizedImage.height)
 
             var pixel = 0
             for (i in 0 until imageSize) {
@@ -52,31 +52,18 @@ class ClassifyImage(
                 }
             }
             val classes = arrayOf(
-                "A letter",
-                "B letter",
-                "C letter",
-                "D letter",
-                "E letter",
-                "F letter",
-                "G letter",
-                "H letter",
-                "I letter",
-                "K letter"
+                "A letter", "B letter", "C letter", "D letter", "E letter",
+                "F letter", "G letter", "H letter", "I letter", "K letter"
             )
-            Log.d("TESTV", classes[maxPos])
-//            binding.result.text = classes[maxPos]
 
-            var s: String? = ""
-            for (i in classes.indices) {
-                s += java.lang.String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100)
-            }
-            Log.d("TESTV - 2", s.toString())
-//            binding.confidence.text = s
-
+            val result = classes[maxPos].split(" ")[0]
             model.close()
-        } catch (exception: Exception) {
 
+            onResult(result)
+
+        } catch (exception: Exception) {
+            Log.d("ClassifyImage", exception.message.toString())
+            onResult("")
         }
     }
-
 }

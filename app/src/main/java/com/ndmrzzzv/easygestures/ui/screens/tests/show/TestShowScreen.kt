@@ -3,6 +3,7 @@ package com.ndmrzzzv.easygestures.ui.screens.tests.show
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,8 +39,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.rememberImagePainter
 import com.ndmrzzzv.domain.network.data.Lesson
+import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 import com.ndmrzzzv.easygestures.ui.views.TestItem
+import com.ndmrzzzv.easygestures.utils.ClassifyImage
+import com.ndmrzzzv.easygestures.utils.StudyData
 import com.ndmrzzzv.network.utils.createImageFile
+import com.ndmrzzzv.network.utils.toBitmap
 
 @Composable
 fun TestShowScreen(
@@ -47,6 +53,8 @@ fun TestShowScreen(
 ) {
     val context = LocalContext.current
     val imageUriMap = remember { mutableStateMapOf<String, Uri>() }
+    var results = remember { mutableStateListOf<TestResult>() }
+    var classifyImage = remember { ClassifyImage(context) }
 
     Column(
         modifier = Modifier
@@ -120,12 +128,33 @@ fun TestShowScreen(
                     )
                 }
             }
+
             Button(
                 modifier = Modifier
                     .padding(end = 8.dp, top = 8.dp, bottom = 8.dp)
                     .height(40.dp)
                     .align(Alignment.End),
-                onClick = { goToResultPage() },
+                onClick = {
+                    imageUriMap.forEach { (questionText, uri) ->
+                        val bitmap = uri.toBitmap(context)
+                        classifyImage.classifyImage(bitmap) { userAnswer ->
+                            val correctAnswer = getCorrectAnswer(questionText)
+
+                            results.add(
+                                TestResult(
+                                    question = questionText,
+                                    correctAnswer = correctAnswer,
+                                    userAnswer = userAnswer
+                                )
+                            )
+
+                            if (results.size == imageUriMap.size) {
+                                StudyData.result = results.toList()
+                                goToResultPage()
+                            }
+                        }
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF531549)
                 )
@@ -140,4 +169,8 @@ fun TestShowScreen(
             }
         }
     }
+}
+
+fun getCorrectAnswer(questionText: String): String {
+    return questionText.last().toString()
 }
