@@ -1,8 +1,10 @@
 package com.ndmrzzzv.easygestures.ui.screens.tests.write
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -22,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.domain.network.data.Question
+import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
 import com.ndmrzzzv.easygestures.ui.views.PagerIndicator
 import com.ndmrzzzv.easygestures.utils.StudyData
@@ -41,8 +46,17 @@ fun TestWriteScreen(
     lesson: Lesson?,
     questions: List<Question>,
     userAnswers: List<String>,
-    actions: TestsScreenActions
+    actions: TestWriteScreenActions
 ) {
+
+    Image(
+        modifier = Modifier.fillMaxSize(),
+        painter = painterResource(id = R.drawable.background),
+        contentDescription = "background",
+        contentScale = ContentScale.FillBounds,
+        alpha = 0.5f
+    )
+
     if (lesson != null) {
         Column(
             modifier = Modifier

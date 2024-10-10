@@ -7,7 +7,11 @@ sealed class Screens(val route: String) {
     object HomeScreen: Screens("home_screen")
     object SearchScreen: Screens("search_screen")
     object ChooseTestScreen: Screens("choose_test")
+
     object TestsScreen: Screens("tests")
+    object WriteTestScreen: Screens("write_tests")
+    object ShowTestScreen: Screens("show_tests")
+
     object ResultsScreen: Screens("results")
     object MyAccountScreen: Screens("my_account_screen")
 

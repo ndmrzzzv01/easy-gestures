@@ -1,4 +1,4 @@
-package com.ndmrzzzv.easygestures.ui.screens.tests
+package com.ndmrzzzv.easygestures.ui.screens.tests.write
 
 import androidx.lifecycle.ViewModel
 import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
@@ -6,7 +6,7 @@ import com.ndmrzzzv.easygestures.utils.StudyData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class TestResultViewModel: ViewModel() {
+class TestWriteViewModel: ViewModel() {
 
     private val _userAnswers = MutableStateFlow<List<String>>(emptyList())
     val userAnswers: StateFlow<List<String>> = _userAnswers

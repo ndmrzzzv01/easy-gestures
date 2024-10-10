@@ -7,17 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.ndmrzzzv.domain.network.data.Lesson
-import com.ndmrzzzv.domain.network.data.Question
 import com.ndmrzzzv.easygestures.R
-import com.ndmrzzzv.easygestures.ui.screens.tests.show.TestShowScreen
-import com.ndmrzzzv.easygestures.ui.screens.tests.write.TestWriteScreen
 
 @Composable
 fun TestsScreen(
     actions: TestsScreenActions,
-    lesson: Lesson?,
-    questions: List<Question>,
-    userAnswers: List<String>
+    lesson: Lesson?
 ) {
 
     Image(
@@ -30,9 +25,9 @@ fun TestsScreen(
 
     if (lesson != null) {
         if (lesson.type == "show") {
-            TestShowScreen(lesson, actions)
+            actions.showShowTestScreen()
         } else {
-            TestWriteScreen(lesson, questions, userAnswers, actions)
+            actions.showWriteTestScreen()
         }
     }
 

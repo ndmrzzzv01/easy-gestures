@@ -26,9 +26,15 @@ import com.ndmrzzzv.easygestures.ui.screens.search.SearchScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreen
 import com.ndmrzzzv.easygestures.ui.screens.splash.SplashScreenActions
-import com.ndmrzzzv.easygestures.ui.screens.tests.TestResultViewModel
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreen
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
+import com.ndmrzzzv.easygestures.ui.screens.tests.TestsViewModel
+import com.ndmrzzzv.easygestures.ui.screens.tests.show.TestShowScreen
+import com.ndmrzzzv.easygestures.ui.screens.tests.show.TestShowScreenActions
+import com.ndmrzzzv.easygestures.ui.screens.tests.show.TestShowViewModel
+import com.ndmrzzzv.easygestures.ui.screens.tests.write.TestWriteScreen
+import com.ndmrzzzv.easygestures.ui.screens.tests.write.TestWriteViewModel
+import com.ndmrzzzv.easygestures.ui.screens.tests.write.TestWriteScreenActions
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -66,14 +72,27 @@ fun EasyGesturesApp() {
             ChooseTestScreen(actions, state)
         }
         composable(Screens.TestsScreen.route) {
-            val viewModel = koinViewModel<TestResultViewModel>()
+            val viewModel = koinViewModel<TestsViewModel>()
+            val actions = TestsScreenActions.create(navController)
+            TestsScreen(actions, viewModel.getLesson())
+        }
+        composable(Screens.WriteTestScreen.route) {
+            val viewModel = koinViewModel<TestWriteViewModel>()
 
             val lesson = viewModel.getLesson()
             val questions = viewModel.getQuestionsInLesson()
             val userAnswers = viewModel.userAnswers.collectAsState().value
 
-            val actions = TestsScreenActions.create(navController, viewModel)
-            TestsScreen(actions, lesson, questions, userAnswers)
+            val actions = TestWriteScreenActions.create(navController, viewModel)
+            TestWriteScreen(lesson, questions, userAnswers, actions)
+        }
+        composable(Screens.ShowTestScreen.route) {
+            val viewModel = koinViewModel<TestShowViewModel>()
+
+            val lesson = viewModel.getLesson()
+
+            val actions = TestShowScreenActions.create(navController)
+            TestShowScreen(lesson, actions)
         }
         composable(Screens.ResultsScreen.route) {
             val viewModel = koinViewModel<ResultViewModel>()

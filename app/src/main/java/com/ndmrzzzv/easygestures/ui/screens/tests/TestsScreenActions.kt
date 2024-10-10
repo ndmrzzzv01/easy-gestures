@@ -4,25 +4,20 @@ import androidx.navigation.NavHostController
 import com.ndmrzzzv.easygestures.ui.screens.Screens
 
 data class TestsScreenActions(
-    val goToResultPage: () -> Unit,
-    val saveUserAnswer: (pageOfQuestion: Int, answer: String) -> Unit,
-    val calculateAndSaveResult: () -> Unit,
+    val showWriteTestScreen: () -> Unit,
+    val showShowTestScreen: () -> Unit,
 ) {
 
     companion object {
         fun create(
             navController: NavHostController,
-            viewModel: TestResultViewModel
         ): TestsScreenActions {
             return TestsScreenActions(
-                goToResultPage = {
-                    navController.navigate(Screens.ResultsScreen.route)
+                showWriteTestScreen = {
+                    navController.navigate(Screens.WriteTestScreen.route)
                 },
-                saveUserAnswer = { pageOfQuestion, answer ->
-                    viewModel.updateUserAnswer(pageOfQuestion, answer)
-                },
-                calculateAndSaveResult = {
-                    viewModel.calculateAndSaveResults()
+                showShowTestScreen = {
+                    navController.navigate(Screens.ShowTestScreen.route)
                 }
             )
         }

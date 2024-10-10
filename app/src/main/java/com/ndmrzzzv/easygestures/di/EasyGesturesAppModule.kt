@@ -10,7 +10,9 @@ import com.ndmrzzzv.easygestures.ui.screens.login.LoginViewModel
 import com.ndmrzzzv.easygestures.ui.screens.myaccount.MyAccountViewModel
 import com.ndmrzzzv.easygestures.ui.screens.result.ResultViewModel
 import com.ndmrzzzv.easygestures.ui.screens.search.SearchViewModel
-import com.ndmrzzzv.easygestures.ui.screens.tests.TestResultViewModel
+import com.ndmrzzzv.easygestures.ui.screens.tests.TestsViewModel
+import com.ndmrzzzv.easygestures.ui.screens.tests.show.TestShowViewModel
+import com.ndmrzzzv.easygestures.ui.screens.tests.write.TestWriteViewModel
 import com.ndmrzzzv.easygestures.utils.ClassifyImage
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -28,7 +30,11 @@ val appModule = module {
 
     viewModel { MyAccountViewModel(androidContext()) }
 
-    viewModel { TestResultViewModel() }
+    viewModel { TestsViewModel() }
+
+    viewModel { TestWriteViewModel() }
+
+    viewModel { TestShowViewModel() }
 
     viewModel { ResultViewModel() }
 

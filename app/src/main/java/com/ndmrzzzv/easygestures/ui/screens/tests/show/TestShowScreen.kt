@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +31,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,6 +42,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.rememberImagePainter
 import com.ndmrzzzv.domain.network.data.Lesson
+import com.ndmrzzzv.easygestures.R
 import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 import com.ndmrzzzv.easygestures.ui.views.TestItem
@@ -50,12 +54,20 @@ import com.ndmrzzzv.network.utils.toBitmap
 @Composable
 fun TestShowScreen(
     lesson: Lesson?,
-    actions: TestsScreenActions,
+    actions: TestShowScreenActions,
 ) {
     val context = LocalContext.current
     val imageUriMap = remember { mutableStateMapOf<String, Uri>() }
     var results = remember { mutableStateListOf<TestResult>() }
     var classifyImage = remember { ClassifyImage(context) }
+
+    Image(
+        modifier = Modifier.fillMaxSize(),
+        painter = painterResource(id = R.drawable.background),
+        contentDescription = "background",
+        contentScale = ContentScale.FillBounds,
+        alpha = 0.5f
+    )
 
     Column(
         modifier = Modifier
