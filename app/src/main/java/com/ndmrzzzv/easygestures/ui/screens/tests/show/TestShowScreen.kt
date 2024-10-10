@@ -39,6 +39,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.rememberImagePainter
 import com.ndmrzzzv.domain.network.data.Lesson
+import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
 import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 import com.ndmrzzzv.easygestures.ui.views.TestItem
 import com.ndmrzzzv.easygestures.utils.ClassifyImage
@@ -49,7 +50,7 @@ import com.ndmrzzzv.network.utils.toBitmap
 @Composable
 fun TestShowScreen(
     lesson: Lesson?,
-    goToResultPage: () -> Unit
+    actions: TestsScreenActions,
 ) {
     val context = LocalContext.current
     val imageUriMap = remember { mutableStateMapOf<String, Uri>() }
@@ -150,7 +151,7 @@ fun TestShowScreen(
 
                             if (results.size == imageUriMap.size) {
                                 StudyData.result = results.toList()
-                                goToResultPage()
+                                actions.goToResultPage()
                             }
                         }
                     }

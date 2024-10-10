@@ -16,7 +16,8 @@ import com.ndmrzzzv.easygestures.ui.screens.tests.write.TestWriteScreen
 fun TestsScreen(
     actions: TestsScreenActions,
     lesson: Lesson?,
-    questions: List<Question>
+    questions: List<Question>,
+    userAnswers: List<String>
 ) {
 
     Image(
@@ -29,9 +30,9 @@ fun TestsScreen(
 
     if (lesson != null) {
         if (lesson.type == "show") {
-            TestShowScreen(lesson, actions.goToResultPage)
+            TestShowScreen(lesson, actions)
         } else {
-            TestWriteScreen(lesson, questions, actions.goToResultPage)
+            TestWriteScreen(lesson, questions, userAnswers, actions)
         }
     }
 

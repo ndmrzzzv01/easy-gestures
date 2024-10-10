@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.ndmrzzzv.domain.network.data.Lesson
 import com.ndmrzzzv.domain.network.data.Question
+import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
 import com.ndmrzzzv.easygestures.ui.views.PagerIndicator
 import com.ndmrzzzv.easygestures.utils.StudyData
 import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
@@ -39,7 +40,8 @@ import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 fun TestWriteScreen(
     lesson: Lesson?,
     questions: List<Question>,
-    goToResultPage: () -> Unit
+    userAnswers: List<String>,
+    actions: TestsScreenActions
 ) {
     if (lesson != null) {
         Column(
@@ -47,8 +49,6 @@ fun TestWriteScreen(
                 .fillMaxWidth()
         ) {
             val pagerState = rememberPagerState(pageCount = { questions.size })
-
-            val userAnswers = remember { mutableStateListOf(*Array(questions.size) { "" }) }
 
             Text(
                 modifier = Modifier
@@ -83,7 +83,7 @@ fun TestWriteScreen(
                             .padding(start = 16.dp, end = 16.dp, top = 16.dp),
                         value = userAnswers[page],
                         onValueChange = { newAnswer ->
-                            userAnswers[page] = newAnswer
+                            actions.saveUserAnswer(page, newAnswer)
                         },
                         label = { Text("Your answer") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -99,15 +99,9 @@ fun TestWriteScreen(
                                 .align(Alignment.End)
                                 .padding(end = 16.dp, top = 16.dp),
                             onClick = {
-                                val results = questions.mapIndexed { index, question ->
-                                    TestResult(
-                                        question = "",
-                                        correctAnswer = question.correct_answer ?: "",
-                                        userAnswer = userAnswers[index]
-                                    )
-                                }
-                                StudyData.result = results
-                                goToResultPage()
+                                actions.calculateAndSaveResult()
+
+                                actions.goToResultPage()
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFF531549)
