@@ -1,10 +1,7 @@
 package com.ndmrzzzv.easygestures.ui.screens.tests.show
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -22,44 +19,31 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import coil.compose.rememberImagePainter
 import com.ndmrzzzv.domain.network.data.Lesson
+import com.ndmrzzzv.domain.network.data.Question
 import com.ndmrzzzv.easygestures.R
-import com.ndmrzzzv.easygestures.ui.screens.tests.TestsScreenActions
-import com.ndmrzzzv.easygestures.ui.screens.tests.data.TestResult
 import com.ndmrzzzv.easygestures.ui.views.TestItem
-import com.ndmrzzzv.easygestures.utils.ClassifyImage
-import com.ndmrzzzv.easygestures.utils.StudyData
-import com.ndmrzzzv.network.utils.createImageFile
-import com.ndmrzzzv.network.utils.toBitmap
 
 @Composable
 fun TestShowScreen(
-    lesson: Lesson?,
     actions: TestShowScreenActions,
+    lesson: Lesson?,
+    imageUriMap: SnapshotStateMap<String, Uri>,
+    currentQuestion: String?,
+    currentUri: Uri?,
+    shuffledQuestions: List<Question>,
 ) {
-    val context = LocalContext.current
-    val imageUriMap = remember { mutableStateMapOf<String, Uri>() }
-    var results = remember { mutableStateListOf<TestResult>() }
-    var classifyImage = remember { ClassifyImage(context) }
 
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -85,14 +69,11 @@ fun TestShowScreen(
                 lineHeight = 14.sp
             )
 
-            var currentQuestion by remember { mutableStateOf<String?>(null) }
-            var currentUri by remember { mutableStateOf<Uri?>(null) }
-
             val cameraLauncher =
                 rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { result ->
                     if (result && currentQuestion != null) {
                         currentUri?.let { uri ->
-                            imageUriMap[currentQuestion!!] = uri
+                            actions.saveUriWithQuestion(currentQuestion, uri)
                         }
                     }
                 }
@@ -101,12 +82,9 @@ fun TestShowScreen(
                 ActivityResultContracts.RequestPermission()
             ) { isGranted ->
                 if (isGranted) {
-                    Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
                     currentUri?.let { uri ->
                         cameraLauncher.launch(uri)
                     }
-                } else {
-                    Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -115,8 +93,7 @@ fun TestShowScreen(
                     .padding(top = 8.dp)
                     .weight(1f)
             ) {
-                val questions = lesson.questions?.shuffled() ?: listOf()
-                items(questions) { question ->
+                items(shuffledQuestions) { question ->
                     val imageUri = imageUriMap[question.text]
                     val image = if (imageUri != null && imageUri.path?.isNotEmpty() == true) {
                         rememberImagePainter(imageUri)
@@ -126,14 +103,13 @@ fun TestShowScreen(
                         image = image,
                         question = question.text,
                         onClick = {
-                            currentQuestion = question.text
-                            val file = context.createImageFile()
-                            currentUri = FileProvider.getUriForFile(
-                                context, "com.ndmrzzzv.easygestures.provider", file
-                            )
-                            val permissionCheckResult = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-                            if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-                                cameraLauncher.launch(currentUri!!)
+                            val uri = actions.createImageFile()
+
+                            actions.updateCurrentUri(uri)
+                            actions.updateCurrentQuestion(question.text)
+                            
+                            if (actions.checkPermission()) {
+                                cameraLauncher.launch(uri)
                             } else {
                                 permissionLauncher.launch(Manifest.permission.CAMERA)
                             }
@@ -148,25 +124,7 @@ fun TestShowScreen(
                     .height(40.dp)
                     .align(Alignment.End),
                 onClick = {
-                    imageUriMap.forEach { (questionText, uri) ->
-                        val bitmap = uri.toBitmap(context)
-                        classifyImage.classifyImage(bitmap) { userAnswer ->
-                            val correctAnswer = getCorrectAnswer(questionText)
-
-                            results.add(
-                                TestResult(
-                                    question = questionText,
-                                    correctAnswer = correctAnswer,
-                                    userAnswer = userAnswer
-                                )
-                            )
-
-                            if (results.size == imageUriMap.size) {
-                                StudyData.result = results.toList()
-                                actions.goToResultPage()
-                            }
-                        }
-                    }
+                    actions.goToResultPage()
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF531549)
@@ -182,8 +140,4 @@ fun TestShowScreen(
             }
         }
     }
-}
-
-fun getCorrectAnswer(questionText: String): String {
-    return questionText.last().toString()
 }

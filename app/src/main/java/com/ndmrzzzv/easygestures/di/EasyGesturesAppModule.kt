@@ -34,7 +34,7 @@ val appModule = module {
 
     viewModel { TestWriteViewModel() }
 
-    viewModel { TestShowViewModel() }
+    viewModel { TestShowViewModel(get()) }
 
     viewModel { ResultViewModel() }
 

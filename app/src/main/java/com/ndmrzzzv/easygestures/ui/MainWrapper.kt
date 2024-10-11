@@ -90,9 +90,13 @@ fun EasyGesturesApp() {
             val viewModel = koinViewModel<TestShowViewModel>()
 
             val lesson = viewModel.getLesson()
+            val shuffledQuestions = viewModel.shuffledQuestions.collectAsState().value
+            val imageUriMap = viewModel.imageUriMap
+            val currentQuestion = viewModel.currentQuestion.collectAsState().value
+            val currentUri = viewModel.currentUri.collectAsState().value
 
-            val actions = TestShowScreenActions.create(navController)
-            TestShowScreen(lesson, actions)
+            val actions = TestShowScreenActions.create(navController, viewModel)
+            TestShowScreen(actions, lesson, imageUriMap, currentQuestion, currentUri, shuffledQuestions)
         }
         composable(Screens.ResultsScreen.route) {
             val viewModel = koinViewModel<ResultViewModel>()

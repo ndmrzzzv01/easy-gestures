@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.navigation.NavHostController
-import com.ndmrzzzv.easygestures.getImageForMyAccountLauncher
 import com.ndmrzzzv.easygestures.ui.screens.Screens
 
 data class MyAccountActions(

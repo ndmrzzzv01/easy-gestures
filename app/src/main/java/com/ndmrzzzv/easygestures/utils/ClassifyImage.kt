@@ -2,8 +2,10 @@ package com.ndmrzzzv.easygestures.utils
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import com.ndmrzzzv.easygestures.ml.Model
+import com.ndmrzzzv.network.utils.toBitmap
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
@@ -14,8 +16,9 @@ class ClassifyImage(
 ) {
     private val imageSize = 224
 
-    fun classifyImage(image: Bitmap, onResult: (String) -> Unit = {}) {
+    fun classifyImage(uri: Uri, onResult: (String) -> Unit = {}) {
         try {
+            val image = uri.toBitmap(context)
             val resizedImage = Bitmap.createScaledBitmap(image, imageSize, imageSize, false)
 
             val model = Model.newInstance(context)
