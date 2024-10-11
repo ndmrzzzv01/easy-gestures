@@ -1,14 +1,21 @@
 # EasyGestures
 
-**Easy Gestures** — a diploma project dedicated to studying and learning sign language through gesture recognition technology. This Android application uses TensorFlow Lite to offer a seamless and interactive learning experience, making sign language accessible and engaging.
-The application was developed by myself, from conceptualizing the idea to writing the code. 
+**Easy Gestures** — a diploma project dedicated to studying and learning sign language through gesture recognition technology. 
+This Android application uses TensorFlow Lite to offer a seamless and interactive learning experience, making sign language accessible and engaging.
+The application was developed by myself, from conceptualizing the idea to writing the code.
 
-I personally trained the machine learning model, capturing 20 to 30 photos for each letter of the sign language alphabet under various lighting conditions to ensure accurate gesture recognition. 
+<img src="utils/Screenshot_10.jpg" width="30%" alt="Gestures" />
+
+I personally trained the machine learning model, capturing 20 to 30 photos for each letter of the sign language alphabet under various lighting conditions to ensure accurate gesture recognition.
+I used the TensorFlow Library to train a model for recognizing letters of the English sign alphabet.  
+I achieved over 90% accuracy for all letters. 
+This well-trained model was then integrated into an Android mobile application to enable real-time gesture recognition.
+
 Thanks to this project, I was awarded a diploma with honors.
 
 ## Technologies used
 
-- Tensor Flow Lite
+- TensorFlow Lite
 - Jetpack Compose
 - Clean Architecture + MVVM
 - Multi-module Gradle project
