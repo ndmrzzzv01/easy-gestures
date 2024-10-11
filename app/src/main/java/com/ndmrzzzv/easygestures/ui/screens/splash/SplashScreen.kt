@@ -9,11 +9,11 @@ fun SplashScreen(
     actions: SplashScreenActions
 ) {
     LaunchedEffect(Unit) {
-//        val user = FirebaseAuth.getInstance().currentUser
-//        if (user != null) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
             actions.navigateToHomeScreen()
-//        } else {
-//            actions.navigateToLoginScreen()
-//        }
+        } else {
+            actions.navigateToLoginScreen()
+        }
     }
 }
