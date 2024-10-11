@@ -22,28 +22,28 @@ Thanks to this project, I was awarded a diploma with honors.
 ## Application
 
 ### Login Screen
-<img src="utils/Screenshot_1.png" width="30%" alt="Login Screen" />
+<img src="utils/Screenshot_1.jpg" width="30%" alt="Login Screen" />
 
 ### Main Screen
-<img src="utils/Screenshot_2.png" width="30%" alt="Main Screen" />
+<img src="utils/Screenshot_2.jpg" width="30%" alt="Main Screen" />
 
 ### My Account Screen
-<img src="utils/Screenshot_3.png" width="30%" alt="My Account Screen" />
+<img src="utils/Screenshot_3.jpg" width="30%" alt="My Account Screen" />
 
 ### List of Courses Screen
-<img src="utils/Screenshot_4.png" width="30%" alt="List of Courses Screen" />
+<img src="utils/Screenshot_4.jpg" width="30%" alt="List of Courses Screen" />
 
 ### List of Lessons Screen
-<img src="utils/Screenshot_5.png" width="30%" alt="List of Lessons Screen" />
+<img src="utils/Screenshot_5.jpg" width="30%" alt="List of Lessons Screen" />
 
 ### Written Test Screen
-<img src="utils/Screenshot_6.png" width="30%" alt="Written Test Screen" />
+<img src="utils/Screenshot_6.jpg" width="30%" alt="Written Test Screen" />
 
 ### ShowTest Screen
-<img src="utils/Screenshot_7.png" width="30%" alt="ShowTest Screen" />
+<img src="utils/Screenshot_7.jpg" width="30%" alt="ShowTest Screen" />
 
 ### Filled ShowTest Screen
-<img src="utils/Screenshot_8.png" width="30%" alt="Filled ShowTest Screen" />
+<img src="utils/Screenshot_8.jpg" width="30%" alt="Filled ShowTest Screen" />
 
 ### Results Screen
-<img src="utils/Screenshot_9.png" width="30%" alt="Results Screen" />
+<img src="utils/Screenshot_9.jpg" width="30%" alt="Results Screen" />
